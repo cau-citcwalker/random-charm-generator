@@ -1,0 +1,4 @@
+models/checkpoints/*.safetensors
+models/loras/*.safetensors
+output/
+.git

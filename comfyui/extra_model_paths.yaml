@@ -1,0 +1,11 @@
+# Extra model paths for ComfyUI
+# Loaded automatically on startup
+#
+# Docker volume mounts the models directory at /app/ComfyUI/models
+# so the default paths already work. This file is for additional paths.
+#
+# If running locally (non-Docker), uncomment and adjust:
+# local:
+#   base_path: ./
+#   checkpoints: models/checkpoints/
+#   loras: models/loras/

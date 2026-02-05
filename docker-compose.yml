@@ -1,0 +1,65 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "${FRONTEND_PORT:-8888}:80"
+    depends_on:
+      - backend
+    networks:
+      - gacha-net
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "${BACKEND_PORT:-8889}:8889"
+    environment:
+      - TZ=Asia/Seoul
+      - COMFYUI_URL=${COMFYUI_URL:-http://comfyui:8890}
+      - IMAGE_OUTPUT_DIR=/app/images
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:8888}
+    volumes:
+      - generated-images:/app/images
+      - comfyui-output:/comfyui-output:ro
+    depends_on:
+      - comfyui
+    networks:
+      - gacha-net
+
+  comfyui:
+    build:
+      context: ./comfyui
+      dockerfile: Dockerfile
+    ports:
+      - "${COMFYUI_PORT:-8890}:8890"
+    environment:
+      - TZ=Asia/Seoul
+      - CLI_ARGS=${COMFYUI_CLI_ARGS:---listen 0.0.0.0 --port 8890 --lowvram}
+      - HF_TOKEN=${HF_TOKEN:-}
+    volumes:
+      # Bind mount: pre-download models on host, entrypoint.sh also auto-downloads
+      - ./comfyui/models/checkpoints:/app/ComfyUI/models/checkpoints
+      - ./comfyui/models/loras:/app/ComfyUI/models/loras
+      - comfyui-output:/app/ComfyUI/output
+      - comfyui-custom-nodes:/app/ComfyUI/custom_nodes
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - gacha-net
+
+volumes:
+  generated-images:
+  comfyui-output:
+  comfyui-custom-nodes:
+
+networks:
+  gacha-net:
+    driver: bridge

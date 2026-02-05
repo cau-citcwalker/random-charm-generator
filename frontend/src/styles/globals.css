@@ -1,0 +1,1201 @@
+:root {
+  --bg-primary: #0f0f1a;
+  --bg-secondary: #1a1a2e;
+  --bg-card: #16213e;
+  --text-primary: #e8e8e8;
+  --text-secondary: #a0a0b0;
+  --accent: #7c3aed;
+  --accent-hover: #6d28d9;
+  --success: #10b981;
+  --error: #ef4444;
+  --border-radius: 12px;
+  --transition: 0.3s ease;
+  --cup-spacing: 140px;
+  --cups-width: 420px;
+  --cup-size: 100px;
+  --dome-width: 200px;
+  --dome-height: 150px;
+  --roulette-size: 250px;
+  --mine-cell: 32px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+@supports (justify-content: safe center) {
+  .screen {
+    justify-content: safe center;
+  }
+}
+
+/* Typography */
+.screen-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, var(--accent), #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.screen-desc {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Buttons */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.btn-start,
+.btn-next,
+.btn-complete,
+.btn-download,
+.btn-restart,
+.btn-spin {
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  background: linear-gradient(135deg, var(--accent), #6d28d9);
+  color: white;
+  margin-top: 1.5rem;
+  transition: opacity var(--transition);
+}
+
+.btn-start:disabled,
+.btn-next:disabled,
+.btn-complete:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-restart {
+  background: var(--bg-card);
+  border: 1px solid var(--accent);
+}
+
+.btn-back-game {
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.btn-reset-game {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
+/* Title Screen */
+.title-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.title-text {
+  font-size: 3.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #7c3aed, #ec4899, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
+.title-subtitle {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+/* Gacha Screen */
+.gacha-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.gacha-container {
+  margin: 2rem 0;
+}
+
+.gacha-instruction {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.gacha-result {
+  margin-top: 2rem;
+}
+
+.result-card {
+  background: var(--bg-card);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.result-card.rarity-common {
+  border: 2px solid #9ca3af;
+}
+
+.result-card.rarity-uncommon {
+  border: 2px solid #10b981;
+}
+
+.result-card.rarity-rare {
+  border: 2px solid #3b82f6;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.result-card.rarity-legendary {
+  border: 2px solid #f59e0b;
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.4);
+}
+
+.result-icon {
+  font-size: 3rem;
+}
+
+.rarity-badge {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--bg-secondary);
+}
+
+/* Full-screen gacha result */
+.gacha-result-full {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 2rem;
+}
+
+.result-card-big {
+  background: var(--bg-card);
+  border-radius: 1.5rem;
+  padding: 3rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.result-card-big.rarity-common {
+  border: 3px solid #9ca3af;
+}
+
+.result-card-big.rarity-uncommon {
+  border: 3px solid #10b981;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+.result-card-big.rarity-rare {
+  border: 3px solid #3b82f6;
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+}
+
+.result-card-big.rarity-legendary {
+  border: 3px solid #f59e0b;
+  box-shadow: 0 0 40px rgba(245, 158, 11, 0.5);
+}
+
+.result-icon-big {
+  font-size: 6rem;
+}
+
+.result-name-big {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.rarity-badge-big {
+  font-size: 1rem;
+  text-transform: uppercase;
+  padding: 0.4rem 1.2rem;
+  border-radius: 999px;
+  background: var(--bg-secondary);
+  letter-spacing: 0.05em;
+}
+
+/* Shell Game */
+.shell-game {
+  position: relative;
+}
+
+.cups-container {
+  position: relative;
+  width: var(--cups-width);
+  height: calc(var(--cup-size) + 20px);
+  margin: 0 auto;
+}
+
+.cup {
+  position: absolute;
+  width: var(--cup-size);
+  height: var(--cup-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+}
+
+.cup-body {
+  font-size: 4rem;
+}
+
+.ball {
+  position: absolute;
+  bottom: 5px;
+  font-size: 1.5rem;
+}
+
+/* Gacha Machine */
+.gacha-machine {
+  text-align: center;
+}
+
+.machine-body {
+  position: relative;
+  display: inline-block;
+}
+
+.machine-dome {
+  width: var(--dome-width);
+  height: var(--dome-height);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 100px 100px 0 0;
+  border: 3px solid #555;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  gap: 0.5rem;
+}
+
+.capsule-ball {
+  font-size: 1.5rem;
+}
+
+.machine-handle {
+  font-size: 3rem;
+  display: inline-block;
+  margin: 0.5rem;
+}
+
+.machine-slot {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dispensed-capsule {
+  font-size: 3rem;
+}
+
+/* Roulette */
+.roulette {
+  text-align: center;
+}
+
+.roulette-frame {
+  position: relative;
+  display: inline-block;
+  margin: 1rem 0;
+}
+
+.roulette-pointer {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  z-index: 10;
+  color: var(--accent);
+}
+
+.roulette-wheel {
+  width: var(--roulette-size);
+  height: var(--roulette-size);
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  border: 4px solid #555;
+}
+
+.roulette-segment {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  top: 0;
+  left: 50%;
+  transform-origin: 0% 100%;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.segment-label {
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: white;
+  transform: rotate(22.5deg) translateX(20px);
+}
+
+/* Potion Screen */
+.potion-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 800px;
+  width: 100%;
+}
+
+.potion-shelf {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.potion-bottle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: grab;
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  transition: background var(--transition);
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.potion-bottle:hover {
+  background: var(--bg-card);
+}
+
+.potion-bottle.selected {
+  background: var(--bg-card);
+  outline: 2px solid var(--accent);
+}
+
+.bottle-body {
+  width: 50px;
+  height: 70px;
+  border-radius: 8px 8px 16px 16px;
+  position: relative;
+  opacity: 0.9;
+}
+
+.bottle-cap {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 12px;
+  background: #8b7355;
+  border-radius: 4px 4px 0 0;
+}
+
+.bottle-liquid {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  right: 4px;
+  height: 60%;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 0 0 12px 12px;
+}
+
+.potion-name {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* Cauldron */
+.cauldron {
+  margin: 2rem auto;
+  text-align: center;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  transition: background var(--transition);
+}
+
+.cauldron-active {
+  background: rgba(124, 58, 237, 0.1);
+}
+
+.cauldron-body {
+  position: relative;
+  width: 180px;
+  height: 140px;
+  margin: 0 auto;
+  background: #2d2d2d;
+  border-radius: 0 0 50% 50%;
+  border: 3px solid #555;
+  overflow: hidden;
+}
+
+.cauldron-liquid {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70%;
+  transition: background-color 0.5s ease;
+}
+
+.cauldron-rim {
+  position: absolute;
+  top: 0;
+  left: -5px;
+  right: -5px;
+  height: 12px;
+  background: #555;
+  border-radius: 6px;
+}
+
+.bubbles {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.bubble {
+  position: absolute;
+  bottom: 0;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+}
+
+.cauldron-label {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.selected-list {
+  margin: 1rem 0;
+}
+
+.selected-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.potion-tag {
+  padding: 0.5rem 0.8rem;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: white;
+  cursor: pointer;
+}
+
+/* Pickers */
+.picker-section {
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.picker-section h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.picker-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+}
+
+.picker-item,
+.color-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1rem;
+  background: var(--bg-card);
+  border-radius: var(--border-radius);
+  border: 2px solid transparent;
+  transition: border-color var(--transition);
+}
+
+.picker-selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 12px rgba(124, 58, 237, 0.3);
+}
+
+.picker-icon {
+  font-size: 2rem;
+}
+
+.picker-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.color-swatch {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.combination-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+}
+
+/* Progress Bar */
+.progress-bar-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 1rem 0;
+}
+
+.progress-bar-track {
+  height: 12px;
+  background: var(--bg-card);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #a78bfa);
+  border-radius: 6px;
+}
+
+.progress-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-top: 0.3rem;
+  display: block;
+  text-align: center;
+}
+
+/* Generation Screen */
+.generation-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+}
+
+.generation-hint {
+  color: var(--text-secondary);
+  margin: 1rem 0;
+  font-size: 0.95rem;
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Keyring Result */
+.keyring-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.result-image-container {
+  margin: 2rem 0;
+  padding: 1rem;
+  background: var(--bg-card);
+  border-radius: var(--border-radius);
+  display: inline-block;
+}
+
+.result-image {
+  max-width: 400px;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.result-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Mini Games */
+.minigame-container {
+  width: 100%;
+  max-width: 400px;
+}
+
+.game-picker p {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.game-options {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.game-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border-radius: var(--border-radius);
+  color: var(--text-primary);
+}
+
+.game-emoji {
+  font-size: 2rem;
+}
+
+.game-name {
+  font-size: 0.9rem;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.game-score {
+  font-weight: 600;
+}
+
+/* 2048 */
+.board-2048 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  background: #bbada0;
+  padding: 4px;
+  border-radius: 8px;
+  touch-action: none;
+}
+
+.tile-2048 {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border-radius: 4px;
+}
+
+/* Minesweeper */
+.mine-board {
+  display: grid;
+  gap: 1px;
+  background: #555;
+  border: 2px solid #555;
+  border-radius: 4px;
+}
+
+.mine-cell {
+  width: var(--mine-cell);
+  height: var(--mine-cell);
+  min-width: var(--mine-cell);
+  min-height: var(--mine-cell);
+  background: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.mine-cell.revealed {
+  background: var(--bg-secondary);
+}
+
+.mine-cell.mine {
+  background: #ef4444;
+}
+
+/* Snake */
+.snake-canvas {
+  border: 2px solid #555;
+  border-radius: 4px;
+  touch-action: none;
+}
+
+/* Game Over Overlay */
+.game-over-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border-radius: 8px;
+}
+
+.game-over-overlay p {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.game-over-overlay button {
+  padding: 0.5rem 1.5rem;
+  background: var(--accent);
+  color: white;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.game-2048,
+.minesweeper,
+.snake-game {
+  position: relative;
+}
+
+/* Responsive — Tablet */
+@media (max-width: 600px) {
+  :root {
+    --cup-spacing: 100px;
+    --cups-width: 300px;
+    --cup-size: 80px;
+    --dome-width: 170px;
+    --dome-height: 130px;
+    --roulette-size: 220px;
+    --mine-cell: 28px;
+  }
+
+  .screen {
+    padding: 1rem;
+    justify-content: flex-start;
+    padding-top: 2rem;
+  }
+
+  .screen-title {
+    font-size: 1.6rem;
+  }
+
+  .title-text {
+    font-size: 2.5rem;
+  }
+
+  .potion-shelf {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .picker-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cup-body {
+    font-size: 3rem;
+  }
+
+  .machine-handle {
+    font-size: 2.5rem;
+  }
+
+  .capsule-ball {
+    font-size: 1.2rem;
+  }
+
+  .game-option {
+    padding: 1rem;
+    min-width: 90px;
+  }
+
+  .minigame-container {
+    max-width: 100%;
+  }
+
+  .board-2048 {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .tile-2048 {
+    font-size: 1.1rem;
+  }
+
+  .mine-board {
+    margin: 0 auto;
+  }
+
+  .mine-cell {
+    font-size: 0.75rem;
+  }
+
+  .snake-canvas {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .result-image {
+    max-width: 300px;
+  }
+
+  .cauldron-body {
+    width: 150px;
+    height: 120px;
+  }
+
+  .btn-start,
+  .btn-next,
+  .btn-complete,
+  .btn-download,
+  .btn-restart,
+  .btn-spin {
+    padding: 0.9rem 2rem;
+    font-size: 1rem;
+    min-height: 48px;
+  }
+
+  .result-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .result-actions button {
+    width: 100%;
+  }
+
+  .game-over-overlay p {
+    font-size: 1.2rem;
+  }
+
+  .result-card-big {
+    padding: 2rem 3rem;
+  }
+
+  .result-icon-big {
+    font-size: 5rem;
+  }
+
+  .result-name-big {
+    font-size: 1.6rem;
+  }
+}
+
+/* Responsive — Phone */
+@media (max-width: 480px) {
+  :root {
+    --cup-spacing: 80px;
+    --cups-width: 240px;
+    --cup-size: 64px;
+    --dome-width: 140px;
+    --dome-height: 110px;
+    --roulette-size: 180px;
+    --mine-cell: 24px;
+  }
+
+  .screen {
+    padding: 0.75rem;
+    padding-top: 1.5rem;
+  }
+
+  .title-text {
+    font-size: 2rem;
+  }
+
+  .title-subtitle {
+    font-size: 1rem;
+  }
+
+  .screen-title {
+    font-size: 1.4rem;
+  }
+
+  .screen-desc {
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  .gacha-container {
+    margin: 1rem 0;
+  }
+
+  .gacha-instruction {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  .cup-body {
+    font-size: 2.5rem;
+  }
+
+  .ball {
+    font-size: 1.2rem;
+  }
+
+  .machine-dome {
+    padding: 0.5rem;
+    gap: 0.3rem;
+  }
+
+  .capsule-ball {
+    font-size: 1rem;
+  }
+
+  .machine-handle {
+    font-size: 2rem;
+  }
+
+  .machine-slot {
+    height: 45px;
+  }
+
+  .dispensed-capsule {
+    font-size: 2.2rem;
+  }
+
+  .roulette-pointer {
+    top: -16px;
+    font-size: 1.2rem;
+  }
+
+  .segment-label {
+    font-size: 0.55rem;
+    transform: rotate(22.5deg) translateX(12px);
+  }
+
+  .potion-shelf {
+    gap: 0.5rem;
+  }
+
+  .bottle-body {
+    width: 40px;
+    height: 55px;
+  }
+
+  .potion-name {
+    font-size: 0.7rem;
+  }
+
+  .cauldron {
+    margin: 1rem auto;
+  }
+
+  .cauldron-body {
+    width: 130px;
+    height: 100px;
+  }
+
+  .picker-grid {
+    gap: 0.5rem;
+  }
+
+  .picker-item,
+  .color-item {
+    padding: 0.7rem;
+  }
+
+  .picker-icon {
+    font-size: 1.5rem;
+  }
+
+  .picker-label {
+    font-size: 0.75rem;
+  }
+
+  .board-2048 {
+    max-width: 240px;
+    gap: 3px;
+    padding: 3px;
+  }
+
+  .tile-2048 {
+    font-size: 0.95rem;
+  }
+
+  .mine-cell {
+    font-size: 0.65rem;
+  }
+
+  .game-header {
+    font-size: 0.85rem;
+  }
+
+  .game-option {
+    padding: 0.8rem;
+    min-width: 80px;
+  }
+
+  .game-emoji {
+    font-size: 1.5rem;
+  }
+
+  .game-name {
+    font-size: 0.8rem;
+  }
+
+  .btn-start,
+  .btn-next,
+  .btn-complete,
+  .btn-download,
+  .btn-restart,
+  .btn-spin {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.95rem;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .btn-back-game {
+    font-size: 0.8rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .btn-reset-game {
+    min-height: 44px;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .result-image {
+    max-width: 260px;
+  }
+
+  .result-card {
+    padding: 1.5rem;
+  }
+
+  .result-icon {
+    font-size: 2.5rem;
+  }
+
+  .result-card-big {
+    padding: 1.5rem 2rem;
+    border-radius: 1rem;
+  }
+
+  .result-icon-big {
+    font-size: 4rem;
+  }
+
+  .result-name-big {
+    font-size: 1.3rem;
+  }
+
+  .rarity-badge-big {
+    font-size: 0.85rem;
+    padding: 0.3rem 1rem;
+  }
+
+  .gacha-result-full {
+    gap: 1.5rem;
+  }
+
+  .progress-bar-container {
+    max-width: 100%;
+  }
+
+  .error-container {
+    padding: 1rem;
+  }
+}
+
+/* Responsive — Landscape phone */
+@media (max-height: 500px) and (orientation: landscape) {
+  .screen {
+    justify-content: flex-start;
+    padding-top: 0.5rem;
+    min-height: auto;
+  }
+
+  .gacha-container {
+    margin: 0.5rem 0;
+  }
+
+  .title-text {
+    font-size: 2rem;
+  }
+}

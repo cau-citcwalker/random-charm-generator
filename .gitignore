@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+
+# Build output
+frontend/dist/
+
+# Environment
+.env.local
+.env.production
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated images
+backend/images/*.png
+
+# ComfyUI models (too large for git)
+comfyui/models/checkpoints/*.safetensors
+comfyui/models/loras/*.safetensors
+
+# ComfyUI output
+comfyui/output/
+
+# Docker volumes
+.docker/
+
+# Claude Code
+.claude/
